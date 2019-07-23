@@ -1,0 +1,55 @@
+#include<stdio.h>
+float dp[100][100][100][100], p;
+int a1, a2, a3, a4,n;
+int b1, b2, b3, b4;
+void ZeroOnePack(int a1, int a2,int a3,int a4,float p);
+ int max(int a,int b)//定义一个求最大值的函数
+ {
+	 if(a>b)
+		 return a;
+	 else
+		 return b;
+ }
+void beibao()//定义一个beibao函数
+{
+
+	    printf("请输入物品数量\n");
+	    scanf("%d",&n); 
+	    printf("请输入约束最大值\n");//输入商品的约束最大值
+        scanf("%d",&b1);
+    	scanf("%d",&b2);
+       	scanf("%d",&b3);
+	    scanf("%d",&b4);
+	for (int i = 1; i <= n; i++)
+	{   
+		printf("依次输入约束条件和价值");
+    	scanf("%d",&a1);
+    	scanf("%d",&a2);
+       	scanf("%d",&a3);
+    	scanf("%d",&a4);
+	    scanf("%f",&p);
+		ZeroOnePack(a1,a2,a3,a4,p);//a1,a2,a3,a4按次序为商品n对应的约束条件，p为对应价值
+	}
+	printf("%f",dp[b1][b2][b3][b4]);//存储满足条件的最大值 
+
+}
+ 
+void ZeroOnePack(int a1, int a2,int a3,int a4,float p)//四种循环对应四种约束条件 计算满足条件的最大值
+{
+	for (int i = b1; i >= a1; i--)
+	for (int j = b2; j >= a2; j--)
+	for (int k = b3; k >= a3; k--)
+	for (int o = b4; o >= a4; o--)
+		dp[i][j][k][o]= max(dp[i - a1][j - a2][k-a3][o-a4]+ p, dp[i][j][k][o]);//循环算法 遍历求满足条件的最大值 用到了max函数 每多一维 多一重循环
+}
+int main()
+{
+	int mm;
+	printf("请输入计算次数\n");
+	scanf("%d",&mm);
+	for(int nn=0;nn<mm;nn++)
+	{
+		beibao();
+	}
+	return 0;
+}
